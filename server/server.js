@@ -1,9 +1,11 @@
 import express from "express";
 const app = express();
 import {mongoose} from "mongoose";
+import cors from "cors";
 
 import { userRouter } from "./routes/user.js";
 import { adminRouter } from "./routes/admin.js";
+app.use(cors());
 app.use(express.json());
 
 app.use("/users", userRouter);
