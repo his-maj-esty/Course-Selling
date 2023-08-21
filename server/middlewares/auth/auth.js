@@ -32,7 +32,7 @@ async function AuthenticationUser(req, res, next){
       next();
     }
     else{
-      res.send("invalid user/admin");
+      res.send({message: "invalid user"});
     }
 }
 

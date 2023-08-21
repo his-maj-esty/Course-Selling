@@ -36,12 +36,14 @@ router.post('/login', async (req, res) => {
 
 router.get('/courses', AuthenticationUser, async (req, res) => {
     const courses = await Courses.find({});
-    return res.json({ courses }); // OK
+    return res.json({ courses: courses }); // OK
 });
 
 router.post('/courses/:courseId', AuthenticationUser, async (req, res) => {
     const courseId = req.params.courseId;
+    console.log(courseId);
     const course = await Courses.findById(courseId);
+    console.log(course);
     if (course) {
         const user = await Users.findOne({ username: req.user.username });
         user.purchasedCourses.push(course); // it is only pushing id(acting smart and following schema)
@@ -55,7 +57,7 @@ router.post('/courses/:courseId', AuthenticationUser, async (req, res) => {
 router.get('/purchasedCourses', AuthenticationUser, async (req, res) => {
     const user = await Users.findOne({ username: req.user.username }).populate("purchasedCourses");
     const courses = user.purchasedCourses;
-    return res.json({ purchasedCourses: courses }); // OK
+    return res.send({ purchasedCourses: courses }); // OK
 });
 
 export { router as userRouter };
