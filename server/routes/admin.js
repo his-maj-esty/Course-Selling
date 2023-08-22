@@ -52,4 +52,10 @@ router.get('/courses', AuthenticationAdmin, async (req, res) => {
   return res.json({ courses }); // OK
 });
 
+router.delete('/courses/:courseId', AuthenticationAdmin, async (req, res) => {
+  const courseId = req.params.courseId;
+  await Courses.findByIdAndDelete(courseId);
+  return res.send({ message: 'Course updated successfully' }); // OK
+});
+
 export { router as adminRouter };
