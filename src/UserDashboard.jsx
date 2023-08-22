@@ -16,9 +16,9 @@ export function UserDashBoard(){
             }
           ).then((res) => {
                 setPurchased(res.data.purchasedCourses);
-            }).catch((res)=>{
-                alert(res.response.data.message);
-                window.location = "/"
+            }).catch((err)=>{
+                console.log(err);
+                window.location = "/";
             })
     };
 
@@ -38,7 +38,7 @@ export function UserDashBoard(){
 
     useEffect(() => {
         getPurchased();
-        getAllCourses()
+        getAllCourses();
     },[]);
 
     return(
@@ -48,7 +48,7 @@ export function UserDashBoard(){
                 <div className="flex">
                 {
                     purchased.map((course) =>{
-                        return (<CourseCard title={course.title} price={course.price} imgLink={course.imgLink} purchased={true} id={course._id}></CourseCard>);
+                        return (<CourseCard key={course._id} title={course.title} price={course.price} imgLink={course.imgLink} purchased={true} id={course._id} update={getPurchased}></CourseCard>);
                     })
                 }
                 </div>
@@ -59,7 +59,7 @@ export function UserDashBoard(){
                             allCourses.map((course) => {
                                 const alreadyPurchased = purchased.find((pCourse) => pCourse._id === course._id);
                                 if(!alreadyPurchased){
-                                    return (<CourseCard title={course.title} price={course.price} imgLink={course.imgLink} purchased={false} id={course._id}></CourseCard>);
+                                    return (<CourseCard key={course._id} title={course.title} price={course.price} imgLink={course.imgLink} purchased={false} id={course._id} update={getPurchased}></CourseCard>);
                                 }
                             })
                         }
